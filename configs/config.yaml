@@ -1,0 +1,18 @@
+# configs/config.yaml
+project_name: "ASCII Generator V2"
+
+# Bạn sẽ đổi các đường dẫn này khi đưa lên Kaggle
+# Ví dụ trên Kaggle: raw_dir: "/kaggle/input/ten-dataset-cua-ban/"
+data:
+  raw_dir: "data/raw/"
+  processed_dir: "data/processed/"
+  image_size: 32 # Kích thước patch ảnh (ví dụ 32x32 pixel)
+
+model:
+  batch_size: 32
+  learning_rate: 0.001
+  epochs: 20
+  num_classes: 70 # Số lượng ký tự ASCII bạn muốn dự đoán (ví dụ: bộ 70 ký tự chuẩn)
+  
+  # Trên Kaggle, đổi thành save_dir: "/kaggle/working/"
+  save_dir: "models/"

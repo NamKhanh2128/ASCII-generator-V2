@@ -1,0 +1,11 @@
+# Deep Learning Core
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Xử lý ảnh và tính toán
+Pillow>=9.0.0
+numpy>=1.21.0
+
+# Tiện ích
+PyYAML>=6.0
+matplotlib>=3.5.0
