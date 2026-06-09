@@ -20,15 +20,23 @@ def set_seed(seed=42):
         torch.backends.cudnn.benchmark = False
     print(f">>> Đã cố định Random Seed: {seed}")
 
-def plot_training_loss(train_losses, save_dir):
+def plot_training_loss(train_losses, save_dir, val_losses=None):
     """
-    Vẽ và lưu biểu đồ quá trình giảm Loss sau khi train.
+    Vẽ và lưu biểu đồ quá trình giảm Loss sau khi train cho cả Train và Validation.
     """
     plt.figure(figsize=(10, 5))
-    plt.plot(train_losses, label='Training Loss', color='blue', marker='o')
+    epochs = range(1, len(train_losses) + 1)
+    plt.plot(epochs, train_losses, label='Training Loss', color='blue', marker='o')
+    if val_losses is not None:
+        # Kiểm tra độ dài có trùng khớp không
+        if len(val_losses) == len(train_losses):
+            plt.plot(epochs, val_losses, label='Validation Loss', color='red', marker='s')
+        else:
+            plt.plot(range(1, len(val_losses) + 1), val_losses, label='Validation Loss', color='red', marker='s')
+            
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
-    plt.title('Biểu đồ quá trình huấn luyện (Training Loss)')
+    plt.title('Biểu đồ quá trình huấn luyện (Training & Validation Loss)')
     plt.grid(True)
     plt.legend()
     

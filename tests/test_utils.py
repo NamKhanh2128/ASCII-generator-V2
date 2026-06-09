@@ -22,15 +22,21 @@ def test_plot_training_loss():
     """Kiểm tra xem hàm vẽ biểu đồ có sinh ra file ảnh .png thành công không"""
     # Dữ liệu loss giả lập giảm dần
     fake_losses = [0.9, 0.7, 0.5, 0.3, 0.1]
+    fake_val_losses = [0.95, 0.8, 0.6, 0.45, 0.35]
     
     # Tạo một thư mục tạm thời (chạy xong tự xóa để không làm bẩn project)
     with tempfile.TemporaryDirectory() as temp_dir:
+        # Test 1: Chỉ vẽ Train Loss
         plot_training_loss(fake_losses, temp_dir)
-        
-        # Kiểm tra file ảnh có tồn tại trong thư mục tạm không
         expected_file_path = os.path.join(temp_dir, 'loss_plot.png')
         assert os.path.exists(expected_file_path), "LỖI: plot_training_loss không tạo được file ảnh!"
-        print("✔ [PASS] test_plot_training_loss: File ảnh biểu đồ đã được tạo thành công.")
+        os.remove(expected_file_path) # Xóa để test lần 2
+        
+        # Test 2: Vẽ cả Train Loss và Val Loss
+        plot_training_loss(fake_losses, temp_dir, fake_val_losses)
+        assert os.path.exists(expected_file_path), "LỖI: plot_training_loss khi có Val Loss không tạo được file ảnh!"
+        
+        print("✔ [PASS] test_plot_training_loss: Vẽ biểu đồ Loss đơn và kép thành công.")
 
 if __name__ == "__main__":
     print("="*40)
