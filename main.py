@@ -34,6 +34,16 @@ def main():
         default='configs/config.yaml', 
         help="Đường dẫn đến file cấu hình YAML (mặc định: configs/config.yaml)"
     )
+    parser.add_argument(
+        '--input', 
+        type=str, 
+        help="Đường dẫn đến file ảnh đầu vào (chỉ dùng cho mode inference)"
+    )
+    parser.add_argument(
+        '--output', 
+        type=str, 
+        help="Đường dẫn lưu file ASCII kết quả (chỉ dùng cho mode inference)"
+    )
     
     # 3. Đọc tham số người dùng nhập từ Terminal
     args = parser.parse_args()
@@ -50,6 +60,11 @@ def main():
     if args.mode == 'train':
         train_model(config)
     elif args.mode == 'inference':
+        # Ghi đè cấu hình nếu người dùng truyền tham số dòng lệnh
+        if args.input:
+            config['data']['input_image_path'] = args.input
+        if args.output:
+            config['data']['output_txt_path'] = args.output
         run_inference(config)
 
 if __name__ == "__main__":

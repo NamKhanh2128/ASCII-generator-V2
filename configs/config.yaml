@@ -7,6 +7,9 @@ data:
   raw_dir: "data/raw/"
   processed_dir: "data/processed/"
   image_size: 32 # Kích thước patch ảnh (ví dụ 32x32 pixel)
+  input_image_path: "data/raw/test_image.jpg"
+  output_txt_path: "data/processed/output_ascii.txt"
+  val_split: 0.2
 
 model:
   batch_size: 32
