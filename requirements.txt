@@ -9,3 +9,6 @@ numpy>=1.21.0
 # Tiện ích
 PyYAML>=6.0
 matplotlib>=3.5.0
+
+# Kiểm thử
+pytest>=7.0.0

@@ -53,9 +53,9 @@ def test_batch_inference_consistency():
     model = ASCIICNN(num_classes=num_classes).to(device)
     model.eval()
     
-    # 4. Lưu ảnh giả lập ra file tạm để chạy test
+    # 4. Lưu ảnh giả lập ra file tạm để chạy test (dùng PNG không nén hao hụt)
     with tempfile.TemporaryDirectory() as temp_dir:
-        image_path = os.path.join(temp_dir, 'test_img.jpg')
+        image_path = os.path.join(temp_dir, 'test_img.png')
         img.save(image_path)
         
         output_txt_path = os.path.join(temp_dir, 'output_ascii.txt')
@@ -75,8 +75,8 @@ def test_batch_inference_consistency():
         for line in lines:
             assert len(line) == 3, f"LỖI: Số cột không khớp. Mong đợi 3, nhận được {len(line)}"
             
-        # 7. So sánh tính nhất quán giữa Batch Inference và Single Inference (giả lập tuần tự)
-        # Chúng ta giả lập lại cách chạy tuần tự cũ
+        # 7. So sánh tính nhất quán giữa Batch Inference và Single Inference (đọc cùng một ảnh từ disk)
+        ref_img = Image.open(image_path).convert('L')
         from torchvision import transforms
         transform = transforms.Compose([
             transforms.Resize((image_size, image_size)),
@@ -90,7 +90,7 @@ def test_batch_inference_consistency():
                 ascii_row = ""
                 for col in range(3):
                     box = (col * image_size, row * image_size, (col + 1) * image_size, (row + 1) * image_size)
-                    patch = img.crop(box)
+                    patch = ref_img.crop(box)
                     tensor_patch = transform(patch).unsqueeze(0).to(device)
                     output = model(tensor_patch)
                     _, predicted_idx = torch.max(output, 1)

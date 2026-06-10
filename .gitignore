@@ -1,0 +1,23 @@
+# Cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+venv/
+ENV/
+
+# Pytest & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local model weights and logs
+models/ascii_cnn_last_model.pth
+*.log
+logs/
+
+# Generated outputs
+data/processed/output_ascii.txt
+models/loss_plot.png
